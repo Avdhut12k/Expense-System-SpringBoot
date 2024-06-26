@@ -1,0 +1,12 @@
+server:
+  port: 9003
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/prior
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
