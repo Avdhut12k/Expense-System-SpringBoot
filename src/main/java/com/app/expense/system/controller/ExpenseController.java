@@ -34,12 +34,15 @@ public class ExpenseController {
 
     @PostMapping("/save/")
     public Expense saveExpense(@RequestBody Expense expense){
+
+        logger.info("In a ExpenseController of method saveExpense : " + expense);
         return expenseService.saveExpense(expense);
     }
 
 
     @PostMapping("/")
     public ResponseEntity<?> saveUnknownExpense(@RequestBody String unknownExpense) throws JsonProcessingException {
+        logger.info("In a ExpenseController of method saveUnknownExpense : " + unknownExpense);
         Expense expense = objectMapper.readValue(unknownExpense, Expense.class);
 
         expenseService.saveExpense(expense);
@@ -60,11 +63,13 @@ public class ExpenseController {
     @PutMapping("/{id}")
     public Expense updateExpense(@PathVariable("id") Long expenseId,
                                  @RequestBody Expense updatedExpense) {
+        logger.info("In a ExpenseController of method updateExpense : " + expenseId);
         return expenseService.updateExpense(expenseId,updatedExpense);
     }
 
     @DeleteMapping("/{id}")
     public Expense deleteExpense(@PathVariable("id") Long expenseId) {
+        logger.info("In a ExpenseController of method deleteExpense : " + expenseId);
         return expenseService.deleteExpense(expenseId);
     }
 

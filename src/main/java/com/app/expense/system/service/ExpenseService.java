@@ -5,6 +5,7 @@ import com.app.expense.system.customExceptions.ExpenseNotFoundException;
 import com.app.expense.system.entity.Expense;
 import com.app.expense.system.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,9 @@ public class ExpenseService {
     @Autowired
     private ExpenseRepository expenseRepository;
 
+    @Value("${error.message}")
+    private String errorMessage;
+
     public Expense saveExpense(Expense expense) {
         return expenseRepository.save(expense);
     }
@@ -28,7 +32,6 @@ public class ExpenseService {
         } else {
             return expense.get();
         }
-        //return expense.orElseThrow(() -> new ExpenseNotFoundException("Expense Id Not Found : " + expenseId));
     }
 
 
@@ -58,6 +61,6 @@ public class ExpenseService {
         expenseRepository.delete(expense);
         if(Objects.isNull(getExpenseById(expense.getExpenseId()))){
             return expense;
-        } else throw new ExpenseNotDeletedException("Please check the ExpenseId is present in the Database or not!!");
+        } else throw new ExpenseNotDeletedException(errorMessage);
     }
 }
